@@ -43,7 +43,7 @@ class _CommandInstall(_install_lib):
                 for file in outfiles]
 
 setup(name="stab",
-      version='1',
+      version='2',
       author="Enric Meinhardt-Llopis",
       author_email="enric.meinhardt@fastmail.com",
       description="Python wrapper of C functions for stable distributions",

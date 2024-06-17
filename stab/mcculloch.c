@@ -28,7 +28,7 @@
  *  jroyval@lpi.tel.uva.es    
  */
 
-#include "mcculloch.h"
+//#include "mcculloch.h"
 
 #include <stdlib.h>
 #include <stdio.h>

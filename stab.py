@@ -7,6 +7,7 @@ __stab_stable  = 0
 __stab_uniform_fill = 0
 __stab_normal_fill  = 0
 __stab_stable_fill  = 0
+__stab_mcculloch_fit  = 0
 #__stab_qfit  = 0
 
 
@@ -18,6 +19,7 @@ def __setup_functions():
 	global __stab_uniform_fill
 	global __stab_normal_fill
 	global __stab_stable_fill
+	global __stab_mcculloch_fit
 	if __stab_uniform != 0: return
 
 	from os.path import abspath, dirname
@@ -48,6 +50,12 @@ def __setup_functions():
 	__stab_stable_fill = libstab.random_stable_fill
 	__stab_stable_fill.argtypes = [POINTER(c_double), c_int, c_double, c_double]
 	__stab_stable_fill.restype = None
+
+	__stab_mcculloch_fit = libstab.mcculloch_fit
+	__stab_mcculloch_fit.argtypes = [POINTER(c_double), c_int,
+			POINTER(c_double), POINTER(c_double),
+			POINTER(c_double), POINTER(c_double) ]
+	__stab_mcculloch_fit.restype = None
 
 
 
@@ -99,6 +107,22 @@ def stables(α, β, n):
 	__stab_stable_fill(p, n, α, β)
 	return x
 
+# API
+def fit_quantiles(x):
+	from ctypes import POINTER, c_double
+	from numpy import ascontiguousarray
+	__setup_functions()
+	pp = ascontiguousarray(x, dtype='float64')
+	p = pp.ctypes.data_as(POINTER(c_double))
+	n = x.size
+	α = c_double()
+	β = c_double()
+	c = c_double()
+	z = c_double()
+	__stab_mcculloch_fit(p, n, α, β, c, z)
+	return α.value, β.value, c.value, z.value
+
+
 
 # API
 def read(filename):
@@ -136,9 +160,10 @@ def write(filename, x):
 
 
 # API
-version = 1
+version = 2
 
 __all__ = [
 		"uniform", "normal", "stable",
 		"uniforms", "normals", "stables",
+		"fit_quantiles",
 	"version" ]

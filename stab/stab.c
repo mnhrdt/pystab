@@ -189,4 +189,23 @@ void random_stable_fill(double *x, int n, double alpha, double beta)
 		x[i] = random_stable(alpha, beta);
 }
 
+#include "mcculloch.c"
+
+static int compare_doubles(const void *aa, const void *bb)
+{
+	const double *a = (const double *)aa;
+	const double *b = (const double *)bb;
+	return (*a > *b) - (*a < *b);
+}
+
+// api
+void mcculloch_fit(double *x, int n, double *a, double *b, double *c, double *z)
+{
+	double *X = malloc(n*sizeof*X);
+	memcpy(X, x, n*sizeof*X);
+	qsort(X, n, sizeof*X, compare_doubles);
+	stab(X, n, 0, a, b, c, z);
+	free(X);
+}
+
 #endif//_STAB_C
