@@ -1,4 +1,6 @@
-python binding C functions for stable distributions, installable via "pip install stab"
+python binding C functions for stable distributions,
+installable via "pip install pystab"
+usable inside python via "import stab"
 
 To update the pypi hub, you need an account on pypi, and then run the following
 commands:

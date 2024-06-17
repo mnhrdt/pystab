@@ -138,4 +138,7 @@ def write(filename, x):
 # API
 version = 1
 
-__all__ = [ "uniform", "normal", "stable", "uniforms", "normals", "stables", "version" ]
+__all__ = [
+		"uniform", "normal", "stable",
+		"uniforms", "normals", "stables",
+	"version" ]

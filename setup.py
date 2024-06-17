@@ -47,7 +47,7 @@ setup(name="stab",
       author="Enric Meinhardt-Llopis",
       author_email="enric.meinhardt@fastmail.com",
       description="Python wrapper of C functions for stable distributions",
-      url='https://github.com/mnhrdt/pystab',
+      url='https://git.sr.ht/~coco/pystab',
       classifiers=[
           "Operating System :: OS Independent",
       ],
