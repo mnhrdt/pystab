@@ -189,6 +189,24 @@ void random_stable_fill(double *x, int n, double alpha, double beta)
 		x[i] = random_stable(alpha, beta);
 }
 
+// API
+double random_stable4(double a, double b, double c, double m)
+{
+	double x = random_stable(a, b);
+	double y = c * x + m;
+	if (b && a == 1)
+		y += 2 * b * c * log(x) / M_PI;
+	return y;
+}
+
+// API
+void random_stable4_fill(double *x, int n,
+		double a, double b, double c, double m)
+{
+	for (int i = 0; i < n; i++)
+		x[i] = random_stable4(a, b, c, m);
+}
+
 #include "mcculloch.c"
 
 static int compare_doubles(const void *aa, const void *bb)

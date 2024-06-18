@@ -42,16 +42,16 @@ class _CommandInstall(_install_lib):
         return [batch_rename(file, re.sub(matcher, '.so', file))
                 for file in outfiles]
 
-setup(name="stab",
-      version='2',
+setup(name="pystab",
+      version="4",
       author="Enric Meinhardt-Llopis",
       author_email="enric.meinhardt@fastmail.com",
       description="Python wrapper of C functions for stable distributions",
-      url='https://git.sr.ht/~coco/pystab',
+      url="https://git.sr.ht/~coco/pystab",
       classifiers=[
           "Operating System :: OS Independent",
       ],
-      py_modules=['stab'],
+      py_modules=["stab"],
       ext_modules=extensions,
       cmdclass={
           'install_lib': _CommandInstall,

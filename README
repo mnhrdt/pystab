@@ -9,5 +9,5 @@ commands:
         # update version number on file setup.py
         # update version number on file stab.py
 	python setup.py sdist bdist_wheel
-	python -m twine upload dist/stab-X.tar.gz
-	rm -rf build dist stab.egg-info
+	python -m twine upload dist/pystab-X.tar.gz
+	rm -rf build dist pystab.egg-info

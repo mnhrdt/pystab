@@ -37,7 +37,7 @@
 #include <stddef.h>
 
 //ENA IS THE INDEX NU SUB ALPHA DESCRIBED IN MCCULLOCH (1986).
-double ena[16][5] = {
+static double ena[16][5] = {
         {2.4388, 2.4388, 2.4388, 2.4388, 2.4388},
         {2.5120, 2.5117, 2.5125, 2.5129, 2.5148},
         {2.6080, 2.6093, 2.6101, 2.6131, 2.6174},
@@ -57,7 +57,7 @@ double ena[16][5] = {
 };
 
 // ENB IS THE INDEX NU SUB BETA.
-double enb[16][5] = {
+static double enb[16][5] = {
         {0.0000, 0.0000, 0.0000, 0.0000, 0.0000},
         {0.0000, 0.0179, 0.0357, 0.0533, 0.0710},
         {0.0000, 0.0389, 0.0765, 0.1133, 0.1480},
@@ -77,7 +77,7 @@ double enb[16][5] = {
 };
 
 // ENC IS THE INDEX NU SUB C
-double enc[16][5] = {
+static double enc[16][5] = {
         {1.9078, 1.9078, 1.9078, 1.9078, 1.9078},
         {1.9140, 1.9150, 1.9160, 1.9185, 1.9210},
         {1.9210, 1.9220, 1.9275, 1.9360, 1.9470},
@@ -98,7 +98,7 @@ double enc[16][5] = {
 
 // ZA IS THE INDEX NU SUB ZETA.
 // DELTA IS ESTIMATED FROM ZETA, SO NU SUB DELTA IS NOT USED.
-double za[16][5] = {
+static double za[16][5] = {
         {0.0000, 0.0000, 0.0000, 0.0000, 0.0000},
         {0.0000,-0.0166,-0.0322,-0.0488,-0.0644},
         {0.0000,-0.0302,-0.0615,-0.0917,-0.1229},
@@ -120,7 +120,7 @@ double za[16][5] = {
 
 
 
-double frctl (const double *xx, double p, unsigned int n)
+static double frctl (const double *xx, double p, unsigned int n)
 {
 // This proc obtains selected quantiles off the ordered vector x
 // La he modificado ligeramente respecto a la original para contemplar
@@ -273,44 +273,47 @@ int stab(const double *x, const unsigned int n, unsigned int symm,
 
 }
 
-void cztab(double *x, unsigned int n, double *cn, double *zn)
-{
-/* Return McCulloch's interquartile range and median */
-  if (cn!=NULL) *cn = frctl(x,.75,n) - frctl(x,.25,n);
-  if (zn!=NULL) *zn = frctl(x,.5 ,n);
-  return;
-}
-
-void czab(double alpha, double beta, double cn, double q50,
-          double *c, double *zeta)
-{
-/* Estimate c and zeta from current alpha and beta estimations, the interquartile range
- * and the median */
-
-  double s,t;
-  int i,j,sign;
-
-  sign=1;
-  if (beta<0) sign=-1;
-  else if(beta==0) sign = 0;
-
-  i=floor((2-alpha)*10+1);
-  if (i<1) i=1;
-  else if (i>15) i=15;
-  j=floor(beta/0.25+1);
-  if (j<1) j=1;
-  else if (j>4) j=4;
-
-  t=beta/0.25-j+1;
-  s=(2-alpha)/0.1-i+1;
-
-    *c = enc[i-1][j-1] * (1-s) * (1-t) + enc[i][j-1] * s * (1-t) +
-         enc[i-1][j] * t * (1-s) + enc[i][j] * t * s;
-    *c = cn/(*c);
-    *zeta = za[i-1][j-1] * (1-s) * (1-t) + za[i][j-1] * s * (1-t) +
-              za[i-1][j] * t * (1-s) + za[i][j] * t * s;
-    *zeta = q50 + *c * sign * (*zeta);
-
-
-  return;
-}
+// these functions are not used by the python interface, so
+// we comment them to avoid warnings
+//
+//static void cztab(double *x, unsigned int n, double *cn, double *zn)
+//{
+///* Return McCulloch's interquartile range and median */
+//  if (cn!=NULL) *cn = frctl(x,.75,n) - frctl(x,.25,n);
+//  if (zn!=NULL) *zn = frctl(x,.5 ,n);
+//  return;
+//}
+//
+//static void czab(double alpha, double beta, double cn, double q50,
+//          double *c, double *zeta)
+//{
+///* Estimate c and zeta from current alpha and beta estimations, the interquartile range
+// * and the median */
+//
+//  double s,t;
+//  int i,j,sign;
+//
+//  sign=1;
+//  if (beta<0) sign=-1;
+//  else if(beta==0) sign = 0;
+//
+//  i=floor((2-alpha)*10+1);
+//  if (i<1) i=1;
+//  else if (i>15) i=15;
+//  j=floor(beta/0.25+1);
+//  if (j<1) j=1;
+//  else if (j>4) j=4;
+//
+//  t=beta/0.25-j+1;
+//  s=(2-alpha)/0.1-i+1;
+//
+//    *c = enc[i-1][j-1] * (1-s) * (1-t) + enc[i][j-1] * s * (1-t) +
+//         enc[i-1][j] * t * (1-s) + enc[i][j] * t * s;
+//    *c = cn/(*c);
+//    *zeta = za[i-1][j-1] * (1-s) * (1-t) + za[i][j-1] * s * (1-t) +
+//              za[i-1][j] * t * (1-s) + za[i][j] * t * s;
+//    *zeta = q50 + *c * sign * (*zeta);
+//
+//
+//  return;
+//}
