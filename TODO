@@ -1,0 +1,21 @@
+TODO
+
+- ease access to the inner prng
+- implement all Weron's fixes to the simulation formulae
+- fix normalization factor sqrt(2) convention (unclear how!)
+- implement other fitting methods
+- at least, make sure that the given parameters are compatible with the data
+- maybe build and use a much higher-resolution mcculloch table
+- provide separate C packaging (without python)
+- modernize setup.py according to current zeitgeist
+
+
+
+DESIGN REQUIREMENTS
+
+- no dependencies allowed from the C side
+- hard python dependencies: ctypes (for the C/python interface)
+- soft python dependencies: numpy (not required for the scalar-only interface)
+- no further depencencies allowed in the python part
+- should work if pip-installed locally on linux, openbsd, macos
+- can be installed directly under common environemnts (collab, vscode, ...)
