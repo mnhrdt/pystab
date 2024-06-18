@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stdint.h>
+#include <string.h>
 
 
 // Why write a simple random number generator here?
@@ -207,7 +208,9 @@ void random_stable4_fill(double *x, int n,
 		x[i] = random_stable4(a, b, c, m);
 }
 
-#include "mcculloch.c"
+//#include "mcculloch.c"
+int stab(const double *, const unsigned int, unsigned int,
+         double*, double*, double*, double*);
 
 static int compare_doubles(const void *aa, const void *bb)
 {

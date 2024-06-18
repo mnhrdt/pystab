@@ -166,7 +166,7 @@ def fit_quantiles(x):
 
 
 # API
-version = 4
+version = 5
 
 __all__ = [
 		"uniform", "normal", "stable", "stable4",

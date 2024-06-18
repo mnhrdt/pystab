@@ -10,7 +10,7 @@ if sys.platform == "darwin":
     extra_link_args = ["-L /usr/local/lib"]
 
 extensions = [Extension("libstab",
-                        ["stab/stab.c"],
+                        ["stab/stab.c", "stab/mcculloch.c"],
                         include_dirs=['stab', "/usr/local/include"],
                         library_dirs=["/usr/local/lib"],
                         extra_compile_args=extra_compile_args,
@@ -43,7 +43,7 @@ class _CommandInstall(_install_lib):
                 for file in outfiles]
 
 setup(name="pystab",
-      version="4",
+      version="5",
       author="Enric Meinhardt-Llopis",
       author_email="enric.meinhardt@fastmail.com",
       description="Python wrapper of C functions for stable distributions",
