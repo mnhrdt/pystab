@@ -1,6 +1,80 @@
-python binding C functions for stable distributions,
-installable via "pip install pystab"
-usable inside python via "import stab"
+STAB
+====
+
+Simulation and estimation of stable scalar variables.
+
+
+TUTORIAL
+--------
+
+# install
+!pip install pystab
+
+# import
+import stab
+
+# generate one million normal samples
+x = stab.stables(2, 0, 10**6)
+
+# estimate the four parameters from the vector x
+stab.fit_quantiles(x)
+> (1.9972697816715559,
+   0.018033003626273775,
+   0.9993768437879497,
+   -0.000605309795968803)
+
+# generate one million Lévy samples
+x = stab.stables(0.5, 1, 10**6)
+
+# estimate the parameters
+# (notice that the shift parameter is imprecise due to heavy tails)
+stab.fit_quantiles(x)
+> (0.5000056240198412,
+   0.9998393548232919,
+   0.9901156603367183,
+   1.0144504595708657)
+
+
+DOCUMENTATION
+-------------
+
+# core functions
+
+stable(α, β):     # Return a S(α,β,1,0) pseudorandom sample, α∈[2,0[, β∈[-1,1]
+stables(α, β):    # Return a vector with n stable samples i.i.d. S(α,β,1,0)
+fit_quantiles(x): # Return a tuple (α,β,σ,μ) with the estimated 4 parameters
+
+
+# convenience functions
+
+uniform():        # Return a U(0,1) pseudorandom sample
+normal():         # Return a N(0,1) pseudorandom sample
+stable4(α,β,c,μ): # Return a S(α,β,c,μ) pseudorandom sample
+
+uniforms(n):         # Return vector with n pseudorandom samples i.i.d. U(0,1)
+normals(n):          # Return vector with n pseudorandom samples i.i.d. N(0,1)
+stables4(α,β,c,μ,n): # Return vector with n stable samples i.i.d. S(α,β,c,μ)
+
+
+
+ACKNOWLEDGEMENT
+---------------
+
+Reference: https://en.wikipedia.org/wiki/Stable_distribution
+
+The simulation algorithm is that of Chambers-Mallows-Struck and Weron
+
+The estimation algorithm is McCulloch's quantile method, using the GPL
+implementation in C by Royuela.
+
+- McCulloch's original implemantation in GAUSS: https://www.asc.ohio-state.edu/mcculloch.2/programs/STAB
+
+- Royuela's website: http://www.lpi.tel.uva.es/~jroyval/
+
+
+
+RELEASING
+---------
 
 To update the pypi hub, you need an account on pypi, and then run the following
 commands:
